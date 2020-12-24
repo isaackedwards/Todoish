@@ -9,7 +9,7 @@ import UIKit
 
 class TodoIshViewController: UITableViewController {
     
-    let itemArray = ["Find myself", "Work super hard", "Grind until dust literally comes off"]
+    var itemArray = ["Find myself", "Work super hard", "Grind until dust literally comes off"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +44,29 @@ class TodoIshViewController: UITableViewController {
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    //MARK: add new items
+    
+    
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        var textField = UITextField()
+        
+        let alert = UIAlertController(title: "Add New Todoish Item", message: "", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
+            //what will happen once the user clicks the Add Item button on our UIAlert
+            self.itemArray.append(textField.text!)
+            self.tableView.reloadData()
+        }
+        
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Create new item"
+            textField = alertTextField
+            
+        }
+        
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
     }
     
 
