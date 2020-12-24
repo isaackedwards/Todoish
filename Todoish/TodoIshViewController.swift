@@ -10,9 +10,13 @@ import UIKit
 class TodoIshViewController: UITableViewController {
     
     var itemArray = ["Find myself", "Work super hard", "Grind until dust literally comes off"]
+    let defaults = UserDefaults.standard
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let items = defaults.array(forKey: "ToDoishArray") as? [String] {
+            itemArray = items
+        }
         // Do any additional setup after loading the view.
     }
 
@@ -56,6 +60,9 @@ class TodoIshViewController: UITableViewController {
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
             //what will happen once the user clicks the Add Item button on our UIAlert
             self.itemArray.append(textField.text!)
+            
+            self.defaults.set(self.itemArray, forKey: "ToDoishArray")
+            
             self.tableView.reloadData()
         }
         
